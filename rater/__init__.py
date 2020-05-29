@@ -38,7 +38,8 @@ def create_app():
 
     with app.app_context():
         from .models.currency import Currency
-        from .models.coin import Coin
+        from .models.coin_single import CoinSingle
+        from .models.coin_commercial import CoinCommercial
 
         db.create_all()
 

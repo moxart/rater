@@ -6,27 +6,25 @@
 
 {% block main %}
 {% if currency %}
-    <div class="table-responsive text-center">
+    <div class="table-responsive">
         <table class="table table-hover table-borderless table-rate table-currency">
             <thead>
             <tr>
-                <th></th>
                 <th>State</th>
                 <th>Price</th>
                 <th>Country</th>
                 <th>Change</th>
-                <th><i class="fas fa-chevron-down"></i> Min</th>
-                <th><i class="fas fa-chevron-up"></i> Max</th>
-                <th><i class="fas fa-clock"></i> Time</th>
+                <th>Min <i class="fas fa-chevron-down"></i></th>
+                <th>Max <i class="fas fa-chevron-up"></i></th>
+                <th>Time <i class="fas fa-clock"></i></th>
             </tr>
             </thead>
             <tbody>
             {% for item in currency %}
                 <tr>
-                    <td class="id">{{ item.id }}</td>
                     <td class="state">{{ item.alpha3 }}</td>
                     <td class="live_price">{{ item.price }}</td>
-                    <td class="country">{{ item.country }}</td>
+                    <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {% endif %}</td>
                     <td class="change">{{ item.change }}</td>
                     <td class="min">{{ item.min }}</td>
                     <td class="max">{{ item.max }}</td>
@@ -40,44 +38,6 @@
             <div class="row">
                 <div class="col text-center">
                     <a class="btn btn-outline-light btn-more-rates moxart-button" href="{{ url_for('bp_currency.currency_all') }}">More Currencies</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="table-responsive text-center">
-        <table class="table table-hover table-borderless table-rate table-coin">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Change</th>
-                <th>Min <i class="fas fa-chevron-down"></i></th>
-                <th>Max <i class="fas fa-chevron-up"></i></th>
-                <th>Time <i class="fas fa-clock"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in coin %}
-                <tr>
-                    <td class="id">{{ item.id }}</td>
-                    <td class="name">{{ item.title }}</td>
-                    <td class="live_price">{{ item.price }}</td>
-                    <td class="change">{{ item.change }}</td>
-                    <td class="min">{{ item.min }}</td>
-                    <td class="max">{{ item.max }}</td>
-                    <td class="time updated">{{ item.updated_at }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="container more-rates">
-            <div class="row">
-                <div class="col text-center">
-                    <a class="btn btn-outline-light btn-more-rates moxart-button" href="{{ url_for('bp_coin.coin_all') }}">More Coins</a>
                 </div>
             </div>
         </div>

@@ -1,38 +1,73 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Moxart | All Coins
+Moxart | Coin
 {% endblock %}
 
 {% block main %}
-{% if coin %}
-    <div class="table-responsive text-center">
-        <table class="table table-hover table-borderless table-rate table-coin">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Change</th>
-                <th>Min <i class="fas fa-chevron-down"></i></th>
-                <th>Max <i class="fas fa-chevron-up"></i></th>
-                <th>Time <i class="fas fa-clock"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in coin %}
-                <tr>
-                   <td class="id">{{ item.id }}</td>
-                    <td class="name">{{ item.title }}</td>
-                    <td class="live_price">{{ item.price }}</td>
-                    <td class="change">{{ item.change }}</td>
-                    <td class="min">{{ item.min }}</td>
-                    <td class="max">{{ item.max }}</td>
-                    <td class="time updated">{{ item.updated_at }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+{% if coin_single %}
+<div class="table-responsive coin-single-rate">
+    <div class="text-center">
+        <span class="badge badge-pill badge-warning">Single Rate</span>
     </div>
+    <br>
+    <table class="table table-hover table-borderless table-rate table-coin">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Change</th>
+            <th>Min <i class="fas fa-chevron-down"></i></th>
+            <th>Max <i class="fas fa-chevron-up"></i></th>
+            <th>Time <i class="fas fa-clock"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in coin_single %}
+        <tr>
+            <td class="title">{{ item.title }}</td>
+            <td class="live_price">{{ item.price }}</td>
+            <td class="change">{{ item.change }}</td>
+            <td class="min">{{ item.min }}</td>
+            <td class="max">{{ item.max }}</td>
+            <td class="time updated">{{ item.updated_at }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% if coin_commercial %}
+<div class="table-responsive coin-commercial-rate">
+    <div class="text-center">
+        <span class="badge badge-pill badge-warning">Commercial Rate</span>
+    </div>
+    <br>
+    <table class="table table-hover table-borderless table-rate table-coin">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Change</th>
+            <th>Min <i class="fas fa-chevron-down"></i></th>
+            <th>Max <i class="fas fa-chevron-up"></i></th>
+            <th>Time <i class="fas fa-clock"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in coin_commercial %}
+        <tr>
+            <td class="title">{{ item.title }}</td>
+            <td class="live_price">{{ item.price }}</td>
+            <td class="change">{{ item.change }}</td>
+            <td class="min">{{ item.min }}</td>
+            <td class="max">{{ item.max }}</td>
+            <td class="time updated">{{ item.updated_at }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}
 {% endblock %}

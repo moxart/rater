@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} {% endblock %}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="32x3 2" href="{{ url_for('static', filename='images/favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="{{ url_for('static', filename='images/favicon/site.webmanifest') }}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
   </head>
   <body>
     <div class="jumbotron hero-rate bg-dark text-light text-center jumbotron-fluid">
@@ -26,9 +27,9 @@
         </h1>
         <p class="description">Access IRR exchange rates for 100+ currencies</p>
         <p class="buttons">
-          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_main.homepage') }}" role="button">Home</a>
-          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_currency.currency_all') }}" role="button">Currency</a>
-          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_coin.coin_all') }}" role="button">Coin</a>
+          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_main.homepage') }}" role="button"><i class="fas fa-archway"></i> Home</a>
+          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_currency.currency_all') }}" role="button"><i class="fas fa-money-check-alt"></i> Currency</a>
+          <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_coin.coin_all') }}" role="button"><i class="fas fa-coins"></i> Coin</a>
           <a class="btn btn-warning btn-md btn-api moxart-button" href="{{ url_for('bp_main.api') }}" role="button">API</a>
         </p>
       </div>
@@ -43,6 +44,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='scripts/custom.js') }}"></script>
+
   {% endblock %}
   </body>
 </html>

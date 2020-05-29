@@ -40,6 +40,10 @@ def api_currency_by(code):
         data = []
 
         currency = Currency.query.filter_by(alpha3=code.upper()).first()
+
+        if not currency:
+            return jsonify(message="Not Found", status=404)
+
         dump = currency_schema.dump(currency)
 
         data.append({

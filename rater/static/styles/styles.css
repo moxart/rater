@@ -103,6 +103,11 @@ div.hero-rate .moxart-button {
   left: 80%;
 }
 
+div.coin-commercial-rate,
+div.coin-single-rate {
+  margin-bottom: 1.75rem;
+}
+
 table.table-rate td.live_price {
   color: #00f2fe;
 }

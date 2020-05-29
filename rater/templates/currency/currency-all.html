@@ -6,11 +6,10 @@
 
 {% block main %}
 {% if currency %}
-    <div class="table-responsive text-center">
+    <div class="table-responsive">
         <table class="table table-hover table-borderless table-rate table-currency">
             <thead>
             <tr>
-                <th></th>
                 <th>State</th>
                 <th>Price</th>
                 <th>Country</th>
@@ -23,10 +22,9 @@
             <tbody>
             {% for item in currency %}
                 <tr>
-                <td class="id">{{ item.id }}</td>
                     <td class="state">{{ item.alpha3 }}</td>
                     <td class="live_price">{{ item.price }}</td>
-                    <td class="country">{{ item.country }}</td>
+                    <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {% endif %}</td>
                     <td class="change">{{ item.change }}</td>
                     <td class="min">{{ item.min }}</td>
                     <td class="max">{{ item.max }}</td>

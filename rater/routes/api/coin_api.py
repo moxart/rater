@@ -1,13 +1,24 @@
 from flask import Blueprint, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from slugify import slugify
 
+from rater import create_app
 from rater.models.coin_single import CoinSingle, coin_single_schema, coins_single_schema
 from rater.models.coin_commercial import CoinCommercial, coin_commercial_schema, coins_commercial_schema
 
 bp_coin_api = Blueprint('bp_coin_api', __name__, url_prefix='/rates/api')
 
+app = create_app()
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address
+)
+
 
 @bp_coin_api.route('/coin', methods=['GET'])
+@limiter.limit("1000/day;100/minute")
 def api_coin_all():
     if request.method == 'GET':
         dump_coin_single = []
@@ -54,6 +65,7 @@ def api_coin_all():
 
 
 @bp_coin_api.route('/coin/single', methods=['GET'])
+@limiter.limit("1000/day;100/minute")
 def api_coin_single():
     if request.method == 'GET':
         data = []
@@ -78,6 +90,7 @@ def api_coin_single():
 
 
 @bp_coin_api.route('/coin/single/<string:code>')
+@limiter.limit("1000/day;100/minute")
 def api_coin_single_by(code):
     if request.method == 'GET':
         data = []
@@ -106,6 +119,7 @@ def api_coin_single_by(code):
 
 
 @bp_coin_api.route('/coin/commercial', methods=['GET'])
+@limiter.limit("1000/day;100/minute")
 def api_coin_commercial():
     if request.method == 'GET':
         data = []
@@ -130,6 +144,7 @@ def api_coin_commercial():
 
 
 @bp_coin_api.route('/coin/commercial/<string:code>')
+@limiter.limit("1000/day;100/minute")
 def api_coin_commercial_by(code):
     if request.method == 'GET':
         data = []

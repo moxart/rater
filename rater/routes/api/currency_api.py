@@ -1,10 +1,22 @@
 from flask import Blueprint, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+from rater import create_app
 from rater.models.currency import Currency, currency_schema, currencies_schema
 
 bp_currency_api = Blueprint('bp_currency_api', __name__, url_prefix='/rates/api')
 
+app = create_app()
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address
+)
+
 
 @bp_currency_api.route('/currency', methods=['GET'])
+@limiter.limit("1000/day;100/minute")
 def api_currency():
     if request.method == 'GET':
         data = []
@@ -35,6 +47,7 @@ def api_currency():
 
 
 @bp_currency_api.route('/currency/<string:code>')
+@limiter.limit("1000/day;100/minute")
 def api_currency_by(code):
     if request.method == 'GET':
         data = []

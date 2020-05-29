@@ -22,7 +22,13 @@
             <tbody>
             {% for item in currency %}
                 <tr>
-                    <td class="state">{{ item.alpha3 }}</td>
+                    <td class="state">
+                        {% if item.alpha2 == 'EU' %}
+                            <img src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}" alt="European Union {{ item.alpha3  }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}" alt="{{ item.country }} {{ item.alpha3 }}">
+                        {% endif %} {{ item.alpha3 }}
+                    </td>
                     <td class="live_price">{{ item.price }}</td>
                     <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {% endif %}</td>
                     <td class="change">{{ item.change }}</td>

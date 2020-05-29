@@ -108,6 +108,11 @@ div.coin-single-rate {
   margin-bottom: 1.75rem;
 }
 
+table.table-currency td.state img {
+  vertical-align: top;
+  margin-right: 4px;
+}
+
 table.table-rate td.live_price {
   color: #00f2fe;
 }

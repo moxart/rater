@@ -50,22 +50,23 @@ def fetch_currency():
                     sign = '- '
                 else:
                     sign = ''
-
-                currency.append({
-                    "title": title,
-                    "codes": [{
-                        "alpha2": alpha2,
-                        "alpha3": alpha3
-                    }],
-                    "country": country.name if country else '-',
-                    "prices": [{
-                        "live": live_price,
-                        "change": str(sign) + change,
-                        "min": min_price,
-                        "max": max_price
-                    }],
-                    "time": unidecode(updated_at) if re.search(':', updated_at) else "-"
-                })
+                print(alpha3)
+                if country or alpha3 == 'EUR':
+                    currency.append({
+                        "title": title,
+                        "codes": [{
+                            "alpha2": alpha2,
+                            "alpha3": alpha3
+                        }],
+                        "country": country.name if country else 'EUR',
+                        "prices": [{
+                            "live": live_price,
+                            "change": str(sign) + change,
+                            "min": min_price,
+                            "max": max_price
+                        }],
+                        "time": unidecode(updated_at) if re.search(':', updated_at) else "-"
+                    })
 
     return currency
 

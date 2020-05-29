@@ -29,7 +29,7 @@ def api_currency():
                 "time": item['updated_at']
             })
 
-        return jsonify(message="success", status=200, data=data)
+        return jsonify(message="success", status=200, totalResults=len(data), data=data)
 
     return jsonify(message="Unsupported Method")
 

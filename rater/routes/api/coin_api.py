@@ -43,9 +43,13 @@ def api_coin_all():
                 "time": item['updated_at']
             })
 
-        dumper = [dump_single, dump_commercial]
+        dumper = {
+            "single": dump_single,
+            "commercial": dump_commercial
+        }
 
-        return jsonify(message="success", status=200, data=dumper)
+        return jsonify(message="success", status=200,
+                       totalResults=len(dump_coin_single + dump_coin_commercial), data=dumper)
     return jsonify(message="Unsupported Method")
 
 
@@ -69,7 +73,7 @@ def api_coin_single():
                 "time": item['updated_at']
             })
 
-        return jsonify(message="success", status=200, data=data)
+        return jsonify(message="success", status=200, totalResults=len(data), data=data)
     return jsonify(message="Unsupported Method")
 
 
@@ -121,7 +125,7 @@ def api_coin_commercial():
                 "time": item['updated_at']
             })
 
-        return jsonify(message="success", status=200, data=data)
+        return jsonify(message="success", status=200, totalResults=len(data), data=data)
     return jsonify(message="Unsupported Method")
 
 

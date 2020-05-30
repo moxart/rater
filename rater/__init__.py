@@ -4,9 +4,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_htmlmin import HTMLMIN
+from flask_compress import Compress
 
 db = SQLAlchemy()
 ma = Marshmallow()
+compress = Compress()
 htmlmin = HTMLMIN()
 
 
@@ -21,6 +23,7 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
+    compress.init_app(app)
     htmlmin.init_app(app)
 
     from rater.routes import main

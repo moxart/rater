@@ -50,7 +50,7 @@ def fetch_currency():
                     sign = '- '
                 else:
                     sign = ''
-                print(alpha3)
+
                 if country or alpha3 == 'EUR':
                     currency.append({
                         "title": title,
@@ -129,6 +129,8 @@ def fetch_coin():
                             }],
                             "time": updated_at
                         })
+            else:
+                break
 
     return [
         dump_coin_single,

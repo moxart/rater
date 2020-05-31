@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, jsonify, make_response
+from flask import Blueprint, render_template, jsonify
+
 from rater._helpers import get_currencies, save_to_database
 
 bp_currency = Blueprint('bp_currency', __name__, url_prefix='/rates')

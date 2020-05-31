@@ -24,13 +24,17 @@ Moxart | Rates
         <tr>
             <td class="state">
                 {% if item.alpha2 == 'EU' %}
-                    <img src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}" alt="European Union {{ item.alpha3  }}">
+                <img alt="European Union {{ item.alpha3  }}"
+                     src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
                 {% else %}
-                    <img src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}" alt="{{ item.country }} {{ item.alpha3 }}">
+                <img alt="{{ item.country }} {{ item.alpha3 }}"
+                     src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
                 {% endif %} {{ item.alpha3 }}
             </td>
             <td class="live_price">{{ item.price }}</td>
-            <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {% endif %}</td>
+            <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {%
+                endif %}
+            </td>
             <td class="change">{{ item.change }}</td>
             <td class="min">{{ item.min }}</td>
             <td class="max">{{ item.max }}</td>
@@ -43,7 +47,8 @@ Moxart | Rates
     <div class="container more-rates">
         <div class="row">
             <div class="col text-center">
-                <a class="btn btn-outline-light btn-more-rates moxart-button" href="{{ url_for('bp_currency.currency_all') }}">More Currencies</a>
+                <a class="btn btn-outline-light btn-more-rates moxart-button"
+                   href="{{ url_for('bp_currency.currency_all') }}">More Currencies</a>
             </div>
         </div>
     </div>

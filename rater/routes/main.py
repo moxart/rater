@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+
 from rater._helpers import get_currencies
 
 bp_main = Blueprint('bp_main', __name__)

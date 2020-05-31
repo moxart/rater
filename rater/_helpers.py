@@ -1,15 +1,32 @@
-import requests
 import re
-import pycountry
+import time
 
-from flask import jsonify
-from slugify import slugify
+import pycountry
+import requests
 from bs4 import BeautifulSoup
-from rater.models.currency import Currency, currencies_schema
-from rater.models.coin_single import CoinSingle, coins_single_schema
+from flask import jsonify
+from persiantools.jdatetime import JalaliDate, digits
+from slugify import slugify
+
 from rater.models.coin_commercial import CoinCommercial, coins_commercial_schema
-from unidecode import unidecode
+from rater.models.coin_single import CoinSingle, coins_single_schema
+from rater.models.currency import Currency, currencies_schema
 from . import db
+
+mouth_names = {
+    "فروردین": 1,
+    "اردیبهشت": 2,
+    "خرداد": 3,
+    "تیر": 4,
+    "مرداد": 5,
+    "شهریور": 6,
+    "مهر": 7,
+    "آبان": 8,
+    "آذر": 9,
+    "دی": 10,
+    "بهمن": 11,
+    "اسفند": 12
+}
 
 
 def fetch_currency():
@@ -31,7 +48,7 @@ def fetch_currency():
             rows = tbody.find_all('tr')
 
             for row in rows:
-                field = row.findChildren(['th', 'td'], recursive=False)
+                field = row.findChildren(['th', 'td'], recursive=True)
 
                 title = field[0].text.strip()
                 alpha2 = str(field[0].find('span').attrs['class'][1].replace('flag-', '')).upper()
@@ -43,6 +60,20 @@ def fetch_currency():
                 min_price = field[3].text.strip()
                 max_price = field[4].text.strip()
                 updated_at = field[5].text.strip()
+
+                rate_at = None
+
+                try:
+                    t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
+                    rate_at = str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
+                except ValueError:
+                    today = JalaliDate.today()
+                    check_mouth = (re.split(r'\s', field[5].text))
+                    mouth_day = int(check_mouth[0])
+                    mouth_name = str(check_mouth[1])
+
+                    if mouth_name in mouth_names:
+                        rate_at = JalaliDate(today.year, 4, mouth_day).strftime("%Y/%d/%m")
 
                 if 'high' in field[2].find('span').attrs['class']:
                     sign = '+ '
@@ -65,7 +96,7 @@ def fetch_currency():
                             "min": min_price,
                             "max": max_price
                         }],
-                        "time": unidecode(updated_at) if re.search(':', updated_at) else "-"
+                        "time": rate_at
                     })
 
     return currency
@@ -73,7 +104,7 @@ def fetch_currency():
 
 def fetch_coin():
     urls = [
-        'https://english.tgju.net/coin'
+        'https://www.tgju.org/coin'
     ]
 
     dump_coin_single = []
@@ -85,20 +116,41 @@ def fetch_coin():
 
         tables = html.find_all('table', class_='market-table')
 
+        coins_name = [
+            'New Coin',
+            'Old Coin',
+            'Coin / Half',
+            'Coin / Quarter',
+            'Coin / Gram'
+        ]
+
         for i, item in enumerate(tables, start=0):
             if i < 2:
                 tbody = item.find('tbody')
                 rows = tbody.find_all('tr')
 
-                for row in rows:
+                for coin_index, row in enumerate(rows, start=0):
                     field = row.findChildren(['th', 'td'], recursive=False)
-
-                    title = field[0].text.strip()
+                    title = coins_name[coin_index]
                     live_price = field[1].text.strip()
                     change = field[2].text.strip()
                     min_price = field[3].text.strip()
                     max_price = field[4].text.strip()
                     updated_at = field[5].text.strip()
+
+                    rate_at = None
+
+                    try:
+                        t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
+                        rate_at = str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
+                    except ValueError:
+                        today = JalaliDate.today()
+                        check_mouth = (re.split(r'\s', field[5].text))
+                        mouth_day = int(check_mouth[0])
+                        mouth_name = str(check_mouth[1])
+
+                        if mouth_name in mouth_names:
+                            rate_at = JalaliDate(today.year, 4, mouth_day).strftime("%Y/%d/%m")
 
                     if 'high' in field[2].find('span').attrs['class']:
                         sign = '+ '
@@ -116,7 +168,7 @@ def fetch_coin():
                                 "min": min_price,
                                 "max": max_price
                             }],
-                            "time": updated_at
+                            "time": rate_at
                         })
                     elif i == 1:
                         dump_coin_commercial.append({
@@ -127,7 +179,7 @@ def fetch_coin():
                                 "min": min_price,
                                 "max": max_price
                             }],
-                            "time": updated_at
+                            "time": rate_at
                         })
             else:
                 break

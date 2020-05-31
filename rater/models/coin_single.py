@@ -23,4 +23,3 @@ class CoinSingleSchema(ma.Schema):
 
 coin_single_schema = CoinSingleSchema()
 coins_single_schema = CoinSingleSchema(many=True)
-

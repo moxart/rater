@@ -6,49 +6,51 @@ Moxart | Rates
 
 {% block main %}
 {% if currency %}
-<div class="table-responsive">
-    <table class="table table-hover table-borderless table-rate table-currency">
-        <thead>
-        <tr>
-            <th>State</th>
-            <th>Price</th>
-            <th>Country</th>
-            <th>Change</th>
-            <th>Min <i class="fas fa-chevron-down"></i></th>
-            <th>Max <i class="fas fa-chevron-up"></i></th>
-            <th>Time <i class="fas fa-clock"></i></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in currency %}
-        <tr>
-            <td class="state">
-                {% if item.alpha2 == 'EU' %}
-                <img alt="European Union {{ item.alpha3  }}"
-                     src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
-                {% else %}
-                <img alt="{{ item.country }} {{ item.alpha3 }}"
-                     src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
-                {% endif %} {{ item.alpha3 }}
-            </td>
-            <td class="live_price">{{ item.price }}</td>
-            <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {%
-                endif %}
-            </td>
-            <td class="change">{{ item.change }}</td>
-            <td class="min">{{ item.min }}</td>
-            <td class="max">{{ item.max }}</td>
-            <td class="time updated">{{ item.updated_at }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
+    <div class="table-responsive text-center">
+        <table class="table table-hover table-borderless table-rate table-currency">
+            <thead>
+            <tr>
+                <th>State</th>
+                <th>Price</th>
+                <th>Country</th>
+                <th>Change</th>
+                <th>Min <i class="fas fa-chevron-down"></i></th>
+                <th>Max <i class="fas fa-chevron-up"></i></th>
+                <th>Updated At</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in currency %}
+            <tr>
+                <td class="state">
+                    {% if item.alpha2 == 'EU' %}
+                    <img alt="European Union {{ item.alpha3  }}"
+                         src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
+                    {% else %}
+                    <img alt="{{ item.country }} {{ item.alpha3 }}"
+                         src="{{ url_for('static', filename='images/flags/24x24/') }}{{ item.alpha2 | lower }}{{ '.png' }}">
+                    {% endif %} {{ item.alpha3 }}
+                </td>
+                <td class="live_price">{{ item.price }}</td>
+                <td class="country">{% if item.alpha3 == 'EUR' %} {{ 'European Union' }} {% else %} {{ item.country }} {%
+                    endif %}
+                </td>
+                <td class="change">{{ item.change }}</td>
+                <td class="min">{{ item.min }}</td>
+                <td class="max">{{ item.max }}</td>
+                <td class="time updated">{{ item.updated_at }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="container more-rates">
-        <div class="row">
-            <div class="col text-center">
-                <a class="btn btn-outline-light btn-more-rates moxart-button"
-                   href="{{ url_for('bp_currency.currency_all') }}">More Currencies</a>
+        <div class="container more-rates">
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-outline-light btn-more-rates moxart-button"
+                       href="{{ url_for('bp_currency.currency_all') }}">More Currencies</a>
+                </div>
             </div>
         </div>
     </div>

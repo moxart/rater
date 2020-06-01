@@ -17,6 +17,20 @@ body {
     font-weight: normal;
 }
 
+p.code {
+    background-color: #111;
+    border-radius: 6px;
+    padding: 9px;
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+    padding: 9px;
+    color: #F2A700;
+    background-color: #111;
+    border-radius: 6px;
+}
+
 div.hero-rate {
     padding-top: 5rem;
     background-color: #18171b !important;
@@ -170,6 +184,20 @@ div.more-rates {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+
+body.api-page h1.moxart-title {
+    font-size: 38px;
+}
+
+body.api-page h1.moxart-subtitle {
+    font-size: 24px !important;
+}
+
+@media (min-width: 1200px) {
+  .sm-container {
+    width: 970px;
+  }
 }
 
 @media (max-width: 768px) {

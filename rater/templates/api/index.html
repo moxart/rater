@@ -1,17 +1,96 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Moxart | Coin
+Moxart | API
 {% endblock %}
 
+{% block body_class %} api-page {% endblock %}
+
 {% block main %}
-<div>
-    <img alt="Iranian Currencies API"
-         class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-currencies.png') }}">
-</div>
-<br>
-<div>
-    <img alt="Iranian Coins API"
-         class="img-fluid rounded mx-auto d-block api-coins" src="{{ url_for('static', filename='images/screenshots/curl-api-coins.png') }}">
+<div class="container sm-container">
+    <article>
+        <h1 class="text-warning display-4 moxart-title">Getting Started</h1>
+        <br>
+        <p class="lead">
+            The Moxart Rates API is a simple HTTP REST API for searching and retrieving live <strong>Iranian Rial Exchange Rates</strong> over the web.
+        </p>
+        <p class="lead">
+            This <strong>API</strong> is great as a data source for access <strong>IRR exchange rates</strong> for <code>100+</code> currencies and coin prices and
+            other applications where you want to show your users live in near real time.
+        </p>
+        <p class="lead">
+            To get started we're assuming you know how to make web requests in you chosen programming language.
+        </p>
+        <br>
+        <h1 class="text-warning display-4 moxart-subtitle">Currencies Endpoint</h1>
+        <br>
+        <p class="lead">
+            Let's make a request to get live top currencies in the <strong>currency</strong> route right now. We'll use the <code>/currency</code> endpoint
+            for this.
+        </p>
+        <br>
+        <p class="lead code"><code>
+            curl http://moxart.ir/rates/api/currency
+        </code></p>
+        <br>
+        <p class="lead">
+            This returns a <strong>JSON</strong> object with the all currencies results in an array we can iterate over.
+        </p>
+        <p class="lead">
+            If you want headlines just from a specific source, for example <code>USD | EUR | AMD | ...</code> rate, we can do that too.
+        </p>
+        <p class="lead code"><code>
+            curl http://moxart.ir/rates/api/currency/usd
+        </code></p>
+        <br>
+        <div>
+            <img alt="Iranian Currencies API"
+                 class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-currency-usd.png') }}">
+        </div>
+        <br><br>
+        <h1 class="text-warning display-4 moxart-subtitle">Coins Endpoint</h1>
+        <br>
+        <p class="lead">
+            We'll use the <code>/coin</code> endpoint for this.
+        </p>
+        <br>
+        <div>
+            <img alt="Iranian Currencies API"
+                 class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-coins.png') }}">
+        </div>
+        <br><br>
+        <h1 class="text-warning display-4 moxart-subtitle">Specific Coin Rates</h1>
+        <br>
+        <p class="lead">
+            you can have access to the <code>Single</code> and <code>Commercial</code> coin rates with this endpoints:
+        </p>
+        <br>
+        <p class="lead">
+            <code>
+                curl http://localhost:5000/rates/api/coin/{single|commercial}
+            </code>
+        </p>
+        <br>
+        <div>
+            <img alt="Iranian Currencies API"
+                 class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-coin-single.png') }}">
+        </div>
+        <br><br>
+        <h1 class="text-warning display-4 moxart-subtitle">Specific Single &amp; Commercial Rates</h1>
+        <br><br>
+        <p class="lead">
+            <code>
+                curl http://localhost:5000/rates/api/coin/{single | commercial}/{coin-names}
+            </code>
+        </p>
+        <br>
+        <div>
+            <img alt="Iranian Currencies API"
+                 class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-coin-single-new-coin.png') }}">
+        </div>
+        <br>
+        <h1 class="text-warning display-4 moxart-subtitle">Enjoy Moxart Rates!</h1>
+        <br>
+    </article>
 </div>
 {% endblock %}

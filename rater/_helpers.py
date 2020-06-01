@@ -65,15 +65,15 @@ def fetch_currency():
 
                 try:
                     t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
-                    rate_at = str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
+                    rate_at = str('Today: ') + str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
                 except ValueError:
                     today = JalaliDate.today()
                     check_mouth = (re.split(r'\s', field[5].text))
                     mouth_day = int(check_mouth[0])
-                    mouth_name = str(check_mouth[1])
+                    mouth_name = check_mouth[1]
 
-                    if mouth_name in mouth_names:
-                        rate_at = JalaliDate(today.year, 4, mouth_day).strftime("%Y/%d/%m")
+                    if str(mouth_name) in mouth_names:
+                        rate_at = JalaliDate(today.year, int(mouth_names[mouth_name]), mouth_day).strftime("%m/%d")
 
                 if 'high' in field[2].find('span').attrs['class']:
                     sign = '+ '
@@ -142,15 +142,16 @@ def fetch_coin():
 
                     try:
                         t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
-                        rate_at = str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
+                        rate_at = str('Today: ') + str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
                     except ValueError:
                         today = JalaliDate.today()
                         check_mouth = (re.split(r'\s', field[5].text))
                         mouth_day = int(check_mouth[0])
-                        mouth_name = str(check_mouth[1])
+                        mouth_name = check_mouth[1]
 
-                        if mouth_name in mouth_names:
-                            rate_at = JalaliDate(today.year, 4, mouth_day).strftime("%Y/%d/%m")
+                        if str(mouth_name) in mouth_names:
+                            rate_at = JalaliDate(today.year, int(mouth_names[mouth_name]), mouth_day).strftime(
+                                "%m/%d")
 
                     if 'high' in field[2].find('span').attrs['class']:
                         sign = '+ '

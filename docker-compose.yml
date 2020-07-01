@@ -6,7 +6,7 @@ services:
     container_name: flask
     restart: always
     environment: 
-      - APP_NAME=exchange
+      - APP_NAME=rater
     ports:
       - 8000:8000
     command: gunicorn -w 1 -b 0.0.0.0:8000 app:app

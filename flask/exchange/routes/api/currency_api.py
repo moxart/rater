@@ -5,7 +5,7 @@ from flask_limiter.util import get_remote_address
 from exchange import create_app
 from exchange.models.currency import Currency, currency_schema, currencies_schema
 
-bp_currency_api = Blueprint('bp_currency_api', __name__, url_prefix='/rates/api')
+bp_currency_api = Blueprint('bp_currency_api', __name__, url_prefix='/exchange/api')
 
 app = create_app()
 

@@ -8,9 +8,9 @@ from flask import jsonify
 from persiantools.jdatetime import JalaliDate, digits
 from slugify import slugify
 
-from rater.models.coin_commercial import CoinCommercial, coins_commercial_schema
-from rater.models.coin_single import CoinSingle, coins_single_schema
-from rater.models.currency import Currency, currencies_schema
+from exchange.models.coin_commercial import CoinCommercial, coins_commercial_schema
+from exchange.models.coin_single import CoinSingle, coins_single_schema
+from exchange.models.currency import Currency, currencies_schema
 from . import db
 
 mouth_names = {

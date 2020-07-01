@@ -26,11 +26,11 @@ def create_app():
     compress.init_app(app)
     htmlmin.init_app(app)
 
-    from rater.routes import main
-    from rater.routes import currency
-    from rater.routes import coin
-    from rater.routes.api import currency_api
-    from rater.routes.api import coin_api
+    from exchange.routes import main
+    from exchange.routes import currency
+    from exchange.routes import coin
+    from exchange.routes.api import currency_api
+    from exchange.routes.api import coin_api
 
     app.register_blueprint(main.bp_main)
     app.register_blueprint(currency.bp_currency)

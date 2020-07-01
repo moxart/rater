@@ -1,4 +1,4 @@
-from rater import db, ma
+from exchange import db, ma
 
 
 class Currency(db.Model):

@@ -3,11 +3,11 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from slugify import slugify
 
-from rater import create_app
-from rater.models.coin_commercial import CoinCommercial, coin_commercial_schema, coins_commercial_schema
-from rater.models.coin_single import CoinSingle, coin_single_schema, coins_single_schema
+from exchange import create_app
+from exchange.models.coin_commercial import CoinCommercial, coin_commercial_schema, coins_commercial_schema
+from exchange.models.coin_single import CoinSingle, coin_single_schema, coins_single_schema
 
-bp_coin_api = Blueprint('bp_coin_api', __name__, url_prefix='/rates/api')
+bp_coin_api = Blueprint('bp_coin_api', __name__, url_prefix='/exchange/api')
 
 app = create_app()
 

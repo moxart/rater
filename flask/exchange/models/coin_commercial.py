@@ -1,7 +1,9 @@
-from rater import db, ma
+from exchange import db, ma
 
 
-class CoinSingle(db.Model):
+class CoinCommercial(db.Model):
+    __table_args__ = {'extend_existing': True}
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     slug = db.Column(db.String(50))
@@ -12,14 +14,14 @@ class CoinSingle(db.Model):
     updated_at = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<CoinSingle %r>' % self.title
+        return '<CoinCommercial %r>' % self.title
 
 
-class CoinSingleSchema(ma.Schema):
+class CoinCommercialSchema(ma.Schema):
     class Meta:
         ordered = True
         fields = ("id", "title", "slug", "price", "change", "min", "max", "updated_at")
 
 
-coin_single_schema = CoinSingleSchema()
-coins_single_schema = CoinSingleSchema(many=True)
+coin_commercial_schema = CoinCommercialSchema()
+coins_commercial_schema = CoinCommercialSchema(many=True)

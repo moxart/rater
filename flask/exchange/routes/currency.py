@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, jsonify
 
-from rater._helpers import get_currencies, save_to_database
+from exchange._helpers import get_currencies, save_to_database
 
-bp_currency = Blueprint('bp_currency', __name__, url_prefix='/rates')
+bp_currency = Blueprint('bp_currency', __name__, url_prefix='/exchange')
 
 
 @bp_currency.route('/currency/all', methods=['GET'])

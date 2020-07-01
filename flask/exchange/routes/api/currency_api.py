@@ -2,8 +2,8 @@ from flask import Blueprint, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from rater import create_app
-from rater.models.currency import Currency, currency_schema, currencies_schema
+from exchange import create_app
+from exchange.models.currency import Currency, currency_schema, currencies_schema
 
 bp_currency_api = Blueprint('bp_currency_api', __name__, url_prefix='/rates/api')
 

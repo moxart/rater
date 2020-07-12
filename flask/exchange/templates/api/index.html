@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Moxart | API
+Exchange | API
 {% endblock %}
 
 {% block body_class %} api-page {% endblock %}
@@ -12,7 +12,7 @@ Moxart | API
         <h1 class="text-warning display-4 moxart-title">Getting Started</h1>
         <br>
         <p class="lead">
-            The Moxart Rates API is a simple HTTP REST API for searching and retrieving live <strong>Iranian Rial Exchange Rates</strong> over the web.
+            The Exchange API is a simple HTTP REST API for searching and retrieving live <strong>Iranian Rial Exchange Rates</strong> over the web.
         </p>
         <p class="lead">
             This <strong>API</strong> is great as a data source for access <strong>IRR exchange rates</strong> for <code>100+</code> currencies and coin prices and
@@ -30,7 +30,7 @@ Moxart | API
         </p>
         <br>
         <p class="lead code"><code>
-            curl http://moxart.ir/rates/api/currency
+            curl https://raters.ir/exchange/api/currency
         </code></p>
         <br>
         <p class="lead">
@@ -40,7 +40,7 @@ Moxart | API
             If you want headlines just from a specific source, for example <code>USD | EUR | AMD | ...</code> rate, we can do that too.
         </p>
         <p class="lead code"><code>
-            curl http://moxart.ir/rates/api/currency/usd
+            curl https://raters.ir/exchange/api/currency/usd
         </code></p>
         <br>
         <div>
@@ -67,7 +67,7 @@ Moxart | API
         <br>
         <p class="lead">
             <code>
-                curl http://moxart.ir/rates/api/coin/{single|commercial}
+                curl https://raters.ir/exchange/api/coin/{single|commercial}
             </code>
         </p>
         <br>
@@ -80,7 +80,7 @@ Moxart | API
         <br><br>
         <p class="lead">
             <code>
-                curl http://moxart.ir/rates/api/coin/{single|commercial}/{coin-names}
+                curl https://raters.ir/exchange/api/coin/{single|commercial}/{coin-names}
             </code>
         </p>
         <br>
@@ -89,7 +89,7 @@ Moxart | API
                  class="img-fluid rounded mx-auto d-block api-currencies" src="{{ url_for('static', filename='images/screenshots/curl-api-coin-single-new-coin.png') }}">
         </div>
         <br>
-        <h1 class="text-warning display-4 moxart-subtitle">Enjoy Moxart Rates!</h1>
+        <h1 class="text-warning display-4 moxart-subtitle">Enjoy Exchange Raters!</h1>
         <br>
     </article>
 </div>

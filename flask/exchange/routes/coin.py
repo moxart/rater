@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 
 from exchange._helpers import get_coin_single, get_coin_commercial
 
-bp_coin = Blueprint('bp_coin', __name__, url_prefix='/')
+bp_coin = Blueprint('bp_coin', __name__, url_prefix='/exchange')
 
 
 @bp_coin.route('/coin', methods=['GET'])

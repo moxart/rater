@@ -1,14 +1,13 @@
-FROM python:3.8.2
+FROM python:3-slim-buster
 
 LABEL maintainer="Patrick Avakian moxart@moxart.ir"
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN apt-get update \
+    && apt-get install gcc -y \
+    && apt-get clean
 
-WORKDIR /app/flask
+COPY . /app
 
-COPY requirements.txt .
+WORKDIR /app
 
-RUN pip3 install --no-cache-dir -r requirements.txt 
-
-COPY . .
+RUN pip install -r requirements.txt

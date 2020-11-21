@@ -64,7 +64,7 @@ def fetch_currency():
                 rate_at = None
 
                 try:
-                    t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
+                    t = time.strptime(digits.fa_to_en(updated_at), '%H:%M:%S')
                     rate_at = str('Today: ') + str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
                 except ValueError:
                     today = JalaliDate.today()
@@ -141,7 +141,7 @@ def fetch_coin():
                     rate_at = None
 
                     try:
-                        t = time.strptime(digits.fa_to_en(field[5].text.strip()), '%H:%M:%S')
+                        t = time.strptime(digits.fa_to_en(updated_at), '%H:%M:%S')
                         rate_at = str('Today: ') + str(t.tm_hour) + ':' + str(t.tm_min) + ':' + str(t.tm_sec)
                     except ValueError:
                         today = JalaliDate.today()

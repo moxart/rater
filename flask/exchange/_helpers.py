@@ -117,11 +117,11 @@ def fetch_coin():
         tables = html.find_all('table', class_='market-table')
 
         coins_name = [
-            'New Coin',
-            'Old Coin',
-            'Coin / Half',
-            'Coin / Quarter',
-            'Coin / Gram'
+            'سکه امامی',
+            'سکه بهار آزادی',
+            'نیم سکه',
+            'ربع سکه',
+            'سکه گرمی'
         ]
 
         for i, item in enumerate(tables, start=0):

@@ -6,11 +6,12 @@ import requests
 from bs4 import BeautifulSoup
 from flask import jsonify
 from persiantools.jdatetime import JalaliDate, digits
-from slugify import slugify
 
 from exchange.models.coin_commercial import CoinCommercial, coins_commercial_schema
 from exchange.models.coin_single import CoinSingle, coins_single_schema
 from exchange.models.currency import Currency, currencies_schema
+from exchange.models.mappers.coin_mapper import mapToSingleEntity, mapToCommercialEntity
+from exchange.models.mappers.currency_mapper import mapToEntity
 from . import db
 
 mouth_names = {
@@ -201,40 +202,15 @@ def save_to_database():
         db.session.query(CoinCommercial).delete()
 
         for currency in data_currency:
-            rate_currency = Currency(title=currency['title'],
-                                     alpha2=currency['codes'][0]['alpha2'],
-                                     alpha3=currency['codes'][0]['alpha3'],
-                                     country=currency['country'],
-                                     price=currency['prices'][0]['live'],
-                                     change=currency['prices'][0]['change'],
-                                     min=currency['prices'][0]['min'],
-                                     max=currency['prices'][0]['max'],
-                                     updated_at=currency['time']
-                                     )
+            rate_currency = mapToEntity(currency)
             db.session.add(rate_currency)
 
         for coin in data_coin[0]:
-            rate_coin_single = CoinSingle(
-                title=coin['title'],
-                slug=slugify(coin['title']),
-                price=coin['prices'][0]['live'],
-                change=coin['prices'][0]['change'],
-                min=coin['prices'][0]['min'],
-                max=coin['prices'][0]['max'],
-                updated_at=coin['time']
-            )
+            rate_coin_single = mapToSingleEntity(coin)
             db.session.add(rate_coin_single)
 
         for coin in data_coin[1]:
-            rate_coin_commercial = CoinCommercial(
-                title=coin['title'],
-                slug=slugify(coin['title']),
-                price=coin['prices'][0]['live'],
-                change=coin['prices'][0]['change'],
-                min=coin['prices'][0]['min'],
-                max=coin['prices'][0]['max'],
-                updated_at=coin['time']
-            )
+            rate_coin_commercial = mapToCommercialEntity(coin)
             db.session.add(rate_coin_commercial)
 
         db.session.commit()

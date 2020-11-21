@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
 
-from exchange._helpers import get_currencies
+from exchange._helpers import get_currencies, save_to_database
 
 bp_main = Blueprint('bp_main', __name__)
 
@@ -14,3 +14,9 @@ def homepage():
 @bp_main.route('/exchange/api', methods=['GET'])
 def api():
     return render_template('api/index.html')
+
+
+@bp_main.route('/exchange/update-database', methods=['GET'])
+def update_database():
+    if save_to_database():
+        return jsonify(message='database has been updated successfully')

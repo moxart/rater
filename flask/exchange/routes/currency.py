@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template
 
-from exchange._helpers import get_currencies, save_to_database
+from exchange._helpers import get_currencies
 
 bp_currency = Blueprint('bp_currency', __name__, url_prefix='/exchange')
 
@@ -10,8 +10,3 @@ def currency_all():
     data = get_currencies()
     return render_template('currency/currency-all.html', currency=data)
 
-
-@bp_currency.route('/currency/update-database', methods=['GET'])
-def update_database():
-    if save_to_database():
-        return jsonify(message='database has been updated successfully')

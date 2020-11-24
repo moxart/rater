@@ -42,7 +42,7 @@ def fetch_currency():
         resp = requests.get(url)
         html = BeautifulSoup(resp.text, 'html.parser')
 
-        tables = html.find_all('table', class_='market-table')
+        tables = html.find_all('table', class_='data-table market-table market-section-right active')
 
         for table in tables:
             tbody = table.find('tbody')

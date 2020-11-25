@@ -10,8 +10,8 @@ from persiantools.jdatetime import JalaliDate, digits
 from exchange.models.coin_commercial import CoinCommercial, coins_commercial_schema
 from exchange.models.coin_single import CoinSingle, coins_single_schema
 from exchange.models.currency import Currency, currencies_schema
-from exchange.models.mappers.coin_mapper import mapToSingleEntity, mapToCommercialEntity
-from exchange.models.mappers.currency_mapper import mapToEntity
+from exchange.models.mappers.coin_mapper import map_to_single_entity, map_to_commercial_entity
+from exchange.models.mappers.currency_mapper import map_to_entity
 from . import db
 
 mouth_names = {
@@ -36,7 +36,7 @@ def fetch_currency():
         'currency-minor'
     ]
 
-    classNames = [
+    class_name_list = [
         'table.data-table.market-table.market-section-right.active',
         'table.data-table.market-table.active'
     ]
@@ -44,17 +44,17 @@ def fetch_currency():
     currency = []
 
     for route in routes:
-        for className in classNames:
-            currency += fetch_fields(route=route, className=className)
+        for class_name in class_name_list:
+            currency += fetch_fields(route=route, class_name=class_name)
 
     return currency
 
 
 def fetch_coin():
     dump_coin_single = fetch_fields(
-        route='coin', className='table.data-table.market-table.market-section-right')
+        route='coin', class_name='table.data-table.market-table.market-section-right')
     dump_coin_commercial = fetch_fields(
-        route='coin', className='table.data-table.market-table.mobile-half')
+        route='coin', class_name='table.data-table.market-table.mobile-half')
 
     return [
         dump_coin_single,
@@ -72,15 +72,15 @@ def save_to_database():
         db.session.query(CoinCommercial).delete()
 
         for currency in data_currency:
-            rate_currency = mapToEntity(currency)
+            rate_currency = map_to_entity(currency)
             db.session.add(rate_currency)
 
         for coin in data_coin[0]:
-            rate_coin_single = mapToSingleEntity(coin)
+            rate_coin_single = map_to_single_entity(coin)
             db.session.add(rate_coin_single)
 
         for coin in data_coin[1]:
-            rate_coin_commercial = mapToCommercialEntity(coin)
+            rate_coin_commercial = map_to_commercial_entity(coin)
             db.session.add(rate_coin_commercial)
 
         db.session.commit()
@@ -90,36 +90,39 @@ def save_to_database():
 
 
 def get_currencies(limit=None):
-    currencies = Currency.query.limit(limit).all() if limit else Currency.query.all()
+    currencies = Currency.query.limit(
+        limit).all() if limit else Currency.query.all()
     data = currencies_schema.dump(currencies)
 
     return data
 
 
 def get_coin_single(limit=None):
-    coins = CoinSingle.query.limit(limit).all() if limit else CoinSingle.query.all()
+    coins = CoinSingle.query.limit(
+        limit).all() if limit else CoinSingle.query.all()
     data = coins_single_schema.dump(coins)
 
     return data
 
 
 def get_coin_commercial(limit=None):
-    coins = CoinCommercial.query.limit(limit).all() if limit else CoinCommercial.query.all()
+    coins = CoinCommercial.query.limit(
+        limit).all() if limit else CoinCommercial.query.all()
     data = coins_commercial_schema.dump(coins)
 
     return data
 
 
-def fetch_fields(route, className):
+def fetch_fields(route, class_name):
     base_url = "https://www.tgju.org/"
     resp = requests.get(base_url+route)
     html = BeautifulSoup(resp.text, 'html.parser')
     data = []
 
-    tables = html.select(className)
+    tables = html.select(class_name)
     if route == 'coin':
         tables = tables[:1]
-        
+
     for table in tables:
         tbody = table.find('tbody')
         rows = tbody.find_all('tr')

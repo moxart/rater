@@ -9,4 +9,3 @@ bp_currency = Blueprint('bp_currency', __name__, url_prefix='/exchange')
 def currency_all():
     data = get_currencies()
     return render_template('currency/currency-all.html', currency=data)
-

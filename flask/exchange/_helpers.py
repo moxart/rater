@@ -13,6 +13,7 @@ from exchange.models.currency import Currency, currencies_schema
 from exchange.models.mappers.coin_mapper import map_to_single_entity, map_to_commercial_entity
 from exchange.models.mappers.currency_mapper import map_to_entity
 from . import db
+from exchange import constant
 
 mouth_names = {
     "فروردین": 1,
@@ -32,13 +33,13 @@ mouth_names = {
 
 def fetch_currency():
     routes = [
-        'currency',
-        'currency-minor'
+        constant.ROUTE_CURRENCY,
+        constant.ROUTE_CURRENCY_MINOR
     ]
 
     class_name_list = [
-        'table.data-table.market-table.market-section-right.active',
-        'table.data-table.market-table.active'
+        constant.CLASS_NAME_CURRENCY,
+        constant.CLASS_NAME_CURRENCY_EXTRA
     ]
 
     currency = []
@@ -52,9 +53,9 @@ def fetch_currency():
 
 def fetch_coin():
     dump_coin_single = fetch_fields(
-        route='coin', class_name='table.data-table.market-table.market-section-right')
+        route=constant.ROUTE_COIN, class_name=constant.CLASS_NAME_COIN_SINGLE)
     dump_coin_commercial = fetch_fields(
-        route='coin', class_name='table.data-table.market-table.mobile-half')
+        route=constant.ROUTE_COIN, class_name=constant.CLASS_NAME_COIN_COMMERCIAL)
 
     return [
         dump_coin_single,
@@ -85,7 +86,7 @@ def save_to_database():
 
         db.session.commit()
 
-        return jsonify(message="success", status=200,
+        return jsonify(message=constant.MESSAGE_SUCCESS, status=200,
                        currency=data_currency, coin_single=data_coin[0], coin_commercial=data_coin[1]), 200
 
 
@@ -114,13 +115,13 @@ def get_coin_commercial(limit=None):
 
 
 def fetch_fields(route, class_name):
-    base_url = "https://www.tgju.org/"
-    resp = requests.get(base_url+route)
+    resp = requests.get(constant.BASE_URL
+                        + route)
     html = BeautifulSoup(resp.text, 'html.parser')
     data = []
 
     tables = html.select(class_name)
-    if route == 'coin':
+    if route == constant.ROUTE_COIN:
         tables = tables[:1]
 
     for table in tables:

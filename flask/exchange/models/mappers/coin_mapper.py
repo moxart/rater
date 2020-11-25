@@ -4,7 +4,6 @@ from slugify import slugify
 
 
 def mapFromEntity(entity):
-    print(entity)
     return {
         "title": entity['title'],
         "prices": [{

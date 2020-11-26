@@ -3,8 +3,7 @@ from exchange.models.coin_single import CoinSingle
 from slugify import slugify
 
 
-def mapFromEntity(entity):
-    print(entity)
+def map_from_entity(entity):
     return {
         "title": entity['title'],
         "prices": [{
@@ -17,7 +16,7 @@ def mapFromEntity(entity):
     }
 
 
-def mapToSingleEntity(coin):
+def map_to_single_entity(coin):
     return CoinSingle(
         title=coin['title'],
         slug=slugify(coin['title']),
@@ -29,7 +28,7 @@ def mapToSingleEntity(coin):
     )
 
 
-def mapToCommercialEntity(coin):
+def map_to_commercial_entity(coin):
     return CoinCommercial(
         title=coin['title'],
         slug=slugify(coin['title']),
@@ -41,5 +40,5 @@ def mapToCommercialEntity(coin):
     )
 
 
-def mapFromEntityList(entityList):
-    return list(map(mapFromEntity, entityList))
+def map_from_entity_list(entity_list):
+    return list(map(map_from_entity, entity_list))

@@ -1,7 +1,7 @@
 from exchange.models.currency import Currency
 
 
-def mapFromEntity(entity):
+def map_from_entity(entity):
     return {
         "title": entity['title'],
         "codes": [{
@@ -19,7 +19,7 @@ def mapFromEntity(entity):
     }
 
 
-def mapToEntity(currency):
+def map_to_entity(currency):
     return Currency(
         title=currency['title'],
         alpha2=currency['codes'][0]['alpha2'],
@@ -33,5 +33,5 @@ def mapToEntity(currency):
     )
 
 
-def mapFromEntityList(entityList):
-    return list(map(mapFromEntity, entityList))
+def map_from_entity_list(entity_list):
+    return list(map(map_from_entity, entity_list))

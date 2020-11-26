@@ -4,9 +4,11 @@ from flask_limiter.util import get_remote_address
 
 from exchange import create_app
 from exchange.models.currency import Currency, currency_schema, currencies_schema
-from exchange.models.mappers.currency_mapper import mapFromEntity, mapFromEntityList
+from exchange.models.mappers.currency_mapper import map_from_entity, map_from_entity_list
+from exchange import constant
 
-bp_currency_api = Blueprint('bp_currency_api', __name__, url_prefix='/exchange/api')
+bp_currency_api = Blueprint(
+    'bp_currency_api', __name__, url_prefix='/exchange/api')
 
 app = create_app()
 
@@ -23,11 +25,11 @@ def api_currency():
 
         currencies = Currency.query.all()
         dump = currencies_schema.dump(currencies)
-        data = mapFromEntityList(dump)
+        data = map_from_entity_list(dump)
 
-        return jsonify(message="success", status=200, totalResults=len(data), data=data)
+        return jsonify(message=constant.MESSAGE_SUCCESS, status=200, totalResults=len(data), data=data)
 
-    return jsonify(message="Unsupported Method")
+    return jsonify(message=constant.MESSAGE_UNSUPPORTED_METHOD)
 
 
 @bp_currency_api.route('/currency/<string:code>')
@@ -38,11 +40,11 @@ def api_currency_by(code):
         currency = Currency.query.filter_by(alpha3=code.upper()).first()
 
         if not currency:
-            return jsonify(message="Not Found", status=404)
+            return jsonify(message=constant.MESSAGE_NOT_FOUND, status=404)
 
         dump = currency_schema.dump(currency)
-        data = mapFromEntity(dump)
+        data = map_from_entity(dump)
 
-        return jsonify(message="Success", status=200, data=data)
+        return jsonify(message=constant.MESSAGE_SUCCESS, status=200, data=data)
 
-    return jsonify(message="Unsupported Method")
+    return jsonify(message=constant.MESSAGE_UNSUPPORTED_METHOD)

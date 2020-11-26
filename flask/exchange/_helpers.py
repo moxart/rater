@@ -44,6 +44,7 @@ def fetch_currency():
 
     currency = []
 
+
     for route in routes:
         for class_name in class_name_list:
             currency += fetch_fields(route=route, class_name=class_name)

@@ -49,7 +49,7 @@ def api_coin_single():
 
         coins = CoinSingle.query.all()
         dump = coins_single_schema.dump(coins)
-        data = map_from_entity(dump)
+        data = map_from_entity_list(dump)
 
         return jsonify(message=constant.MESSAGE_SUCCESS, status=200, totalResults=len(data), data=data)
     return jsonify(message=constant.MESSAGE_UNSUPPORTED_METHOD)

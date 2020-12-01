@@ -4,9 +4,9 @@ from exchange import db, ma
 class CoinCommercial(db.Model):
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
-    slug = db.Column(db.String(50))
+    slug = db.Column(db.String(50), primary_key=True)
     price = db.Column(db.Integer, nullable=False)
     change = db.Column(db.String)
     min = db.Column(db.Integer)

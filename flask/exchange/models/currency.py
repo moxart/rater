@@ -2,9 +2,9 @@ from exchange import db, ma
 
 
 class Currency(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
-    alpha2 = db.Column(db.String(50), nullable=False)
+    alpha2 = db.Column(db.String(50), primary_key=True)
     alpha3 = db.Column(db.String(50), nullable=False)
     country = db.Column(db.String(50), nullable=True)
     price = db.Column(db.Integer, nullable=False)

@@ -1,13 +1,21 @@
-FROM python:3-slim-buster
+FROM python:3.8-slim-buster
 
-LABEL maintainer="Patrick Avakian moxart@moxart.ir"
+ENV VENV=venv
+ENV PATH="$VENV/bin:$PATH"
 
-RUN apt-get update \
-    && apt-get install gcc -y \
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    && apt-get install gcc python3-venv python3-dev -y \
     && apt-get clean
-
-COPY . /app
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+COPY requirements.txt .
+
+RUN python3 -m venv $VENV
+RUN . venv/bin/activate && \
+    RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000

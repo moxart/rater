@@ -1,0 +1,8 @@
+.vscode
+.idea
+.cache
+.git
+
+node_modules
+README.md
+LICENSE

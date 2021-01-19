@@ -1,0 +1,53 @@
+version: '3.9'
+
+services: 
+
+  flask:
+    build:
+      context: ./flask
+      dockerfile: Dockerfile.prod
+    container_name: flask-app-prod
+    restart: unless-stopped
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    environment: 
+      - FLASK_APP=flask/app.py
+      - FLASK_ENV=production
+    networks: 
+      - my-network
+
+  nginx:
+    build:
+      context: ./nginx/prod
+      dockerfile: Dockerfile
+    container_name: flask-nginx-prod
+    restart: unless-stopped
+    command: /bin/sh -c "while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
+    volumes: 
+      - /etc/ssl/dhparams.pem:/etc/ssl/dhparams.pem
+      - /etc/letsencrypt/live/example.com/fullchain.pem:/etc/letsencrypt/live/example.com/fullchain.pem
+      - /etc/letsencrypt/live/example.com/privkey.pem:/etc/letsencrypt/live/example.com/privkey.pem
+    ports: 
+      - 80:80
+      - 443:443
+    depends_on: 
+      - flask
+    networks: 
+      - my-network
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: flask-certbot-prod
+    restart: unless-stopped
+    entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/logs:/var/log/letsencrypt
+    depends_on: 
+      - nginx
+    networks: 
+      - my-network
+
+networks: 
+  my-network:
+    driver: bridge
